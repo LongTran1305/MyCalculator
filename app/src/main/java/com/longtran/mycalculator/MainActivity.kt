@@ -2,6 +2,7 @@ package com.longtran.mycalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -12,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     var lastNumeric : Boolean = false
     var lastDot : Boolean =  false
     var lastClear : Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +30,11 @@ class MainActivity : AppCompatActivity() {
     }
     fun onClear (view: View){
         var tvValue = tvInput.text.toString()
-        if(lastClear){
-            tvValue = tvValue.substring(0,tvValue.length -1)
-            tvInput.text = tvValue
+        if(lastClear && tvValue.isNotEmpty()){
+                tvValue = tvValue.substring(0,tvValue.length -1)
+                tvInput.text = tvValue
         }
+        lastNumeric =true
     }
     fun onDecimalPoint(view: View){
         if(lastNumeric && !lastDot){
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             tvInput.append((view as Button).text)
             lastNumeric = false
             lastDot = false
+
         }
     }
     private fun isOperatorAdded(value: String) : Boolean{
